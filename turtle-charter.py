@@ -60,8 +60,8 @@ def draw_y_tick_mark(alex, max_height):
     The function draw_y_tick_mark here is used to draw tick marks on Y-axis.
     The value inputs include the turtle object, alex as well as the max_height. We assume that max_height/10 = 1 tick mark
     """
-    print(C_BORDER)
-    tickdistance = (C_HEIGHT / 2 - 2*C_BORDER)/ 10 
+    print(WIN_BORDER)
+    tickdistance = (WIN_HEIGHT / 2 - 2*WIN_BORDER)/ 10 
     alex.write(0, False, align = "right",font =("Arial",10,"normal"))
     
     for i in range(10):
@@ -122,45 +122,47 @@ def draw_bars(alex, filename, feature, color_plan):
     alex.pendown()
     for i in range(0, list_l):
         height = int(list_d[i*3 + 1])
-        draw_rectangle(alex, height * ((C_HEIGHT / 2 - 2 * C_BORDER)/ M_HEIGHT) , i, color_plan)
+        draw_rectangle(alex, height * ((WIN_HEIGHT / 2 - 2 * WIN_BORDER)/ M_HEIGHT) , i, color_plan)
         label = list_d[i*3 + 0]
         write_x_label(alex,label)
 
 def choose_color(color_plan, index):
     """
     This function is used for choosing color, we input value of the index and color plan
-    We will get color results.
+    We will get color results.we provide 2 color styles
     """
-    dark = ['#e41a1c','#377eb8','#4daf4a','#984ea3','#ff7f00']
-    light = ['#fbb4ae','#b3cde3','#ccebc5','#decbe4','#fed9a6']
-    if color_plan == 'dark':
-        color = dark[index % 5]
+    color_1 = ['#c51b8a','#f03b20','#2b8cbe','#2ca25f','#636363']
+    color_2 = ['#fa9fb5','#bcbddc','#ccebc5','#a1d99b','#fa9fb5']
+    if color_plan == 'color_1':
+        color = color_1[index % 5]
     else:
-        color = light[index % 5]
+        color = color_2[index % 5]
     return(color)
   
 def main():
-    """Main function, steps include: 1) set up turtle screen and turtle object; 2)draw axes; 3)draw y axis ticks; 4)select color plan (prompt); 5)draw bar charts
     """
-    turtle.setup(C_WIDTH,C_HEIGHT)
+    we aggregated all the functions above to draw the chart. the variables have been defined and explained in all sub-functions.
+    
+    """
+    turtle.setup(WIN_WIDTH,WIN_HEIGHT)
     alex= turtle.Turtle()
     wn = turtle.Screen()
-    draw_axes(alex, wn, C_WIDTH, C_HEIGHT, C_BORDER)
+    draw_axes(alex, wn, WIN_WIDTH, WIN_HEIGHT, WIN_BORDER)
     draw_y_tick_mark(alex, M_HEIGHT)
-    colorplan = input("choose color theme: dark or light?")
+    colorplan = input("color style: color_1 or color_2?")
     draw_bars(alex, filename, 1, colorplan)
     wn.mainloop()
 
 if __name__ == "__main__":
     
-    filename = input("open file (path):")
+    filename = input("Please enter the file path:")
     import turtle
-    C_WIDTH = 800 #global constant
-    C_HEIGHT = 500 #global constant
-    C_BORDER = 20 #global constant
+    WIN_WIDTH = 800 #global constant
+    WIN_HEIGHT = 600 #global constant
+    WIN_BORDER = 20 #global constant
     NUM_BARS = int(count_observations(filename))
     M_HEIGHT = int(get_max_value(filename,1))
-    BAR_WIDTH = int((C_WIDTH /2 - 2 * C_BORDER) / NUM_BARS - 5)
+    BAR_WIDTH = int((WIN_WIDTH /2 - 2 * WIN_BORDER) / NUM_BARS - 5)
     main()
     
     
